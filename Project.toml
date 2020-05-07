@@ -1,0 +1,10 @@
+name = "FindPeaks1D"
+uuid = "d8961e24-b28b-4efb-8e50-1c680b9a7431"
+authors = ["ymtoo <ymtoo86@gmail.com>"]
+version = "0.1.0"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
