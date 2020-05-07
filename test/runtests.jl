@@ -37,4 +37,6 @@ using Test
     pkindices2, _ = findpeaks1d(x, prominence=0.3, width=2.0, relheight=0.5)
     @test pkindices2 == [6]
 
+    @test_throws ArgumentError pkindiceswlenerror, _ = findpeaks1d(x, prominence=0.3, wlen=0)
+
 end
