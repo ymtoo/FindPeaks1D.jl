@@ -11,7 +11,7 @@ end
 
 function selectbypeakdistance(pkindices, priority, distance)
     npkindices = length(pkindices)
-    distance_ = ceil.(Int, distance)
+#    distance_ = ceil.(Int, distance)
     keep = BitVector(ones(npkindices))
 
     prioritytoposition = sortperm(priority)
@@ -20,13 +20,13 @@ function selectbypeakdistance(pkindices, priority, distance)
         (keep[j] == 0) && continue
 
         k = j-1
-        while (1 <= k) && ((pkindices[j]-pkindices[k]) < distance_)
+        while (1 <= k) && ((pkindices[j]-pkindices[k]) < distance)
             keep[k] = 0
             k -= 1
         end
 
         k = j+1
-        while (k<=npkindices) && ((pkindices[k]-pkindices[j]) < distance_)
+        while (k<=npkindices) && ((pkindices[k]-pkindices[j]) < distance)
             keep[k] = 0
             k += 1
         end

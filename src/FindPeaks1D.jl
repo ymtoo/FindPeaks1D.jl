@@ -50,7 +50,7 @@ Find all local maxima in a 1-D signal with specified `height`, `distance`, `prom
 - `relheight`: used for calculation of peak width
 ...
 """
-function findpeaks1d(x::AbstractVector{T}; height::Union{Nothing,T, NTuple{2,T}}=nothing, distance::Union{Nothing,T}=nothing, prominence::Union{Nothing,Float64,Tuple}=nothing, width::Union{Nothing,Float64,Tuple}=nothing, wlen::Union{Nothing,Int}=nothing, relheight::Float64=0.5) where {T}
+function findpeaks1d(x::AbstractVector{T}; height::Union{Nothing,T, NTuple{2,T}}=nothing, distance::Union{Nothing,Integer}=nothing, prominence::Union{Nothing,Float64,Tuple}=nothing, width::Union{Nothing,Float64,Tuple}=nothing, wlen::Union{Nothing,Int}=nothing, relheight::Float64=0.5) where {T}
     pkindices, leftedges, rightedges = localmaxima1d(x)
     properties = Dict{String,Any}()
 
