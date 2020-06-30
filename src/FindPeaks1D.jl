@@ -13,7 +13,7 @@ function localmaxima1d(x::AbstractVector{T}) where {T}
     rightedges = Vector{Int}(undef, 0)
 
     i = 2
-    imax = length(x)-1
+    imax = length(x)
     while i < imax
         if x[i-1] < x[i]
             iahead = i+1
