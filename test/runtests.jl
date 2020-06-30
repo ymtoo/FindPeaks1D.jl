@@ -39,4 +39,9 @@ using Test
 
     @test_throws ArgumentError pkindiceswlenerror, _ = findpeaks1d(x, prominence=0.3, wlen=0)
 
+    x = [0, 1, 1, 1, 1, 1, 0]
+    pkindices, _ = FindPeaks1D.localmaxima1d(x)
+    @test length(pkindices) == 1
+    @test pkindices[1] == 4
+
 end
