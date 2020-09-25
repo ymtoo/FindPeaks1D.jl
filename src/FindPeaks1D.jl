@@ -7,7 +7,7 @@ include("utils.jl")
 """
 Finds all local maxima in a 1-D signal. The first and the last sample can't be maxima.
 """
-function localmaxima1d(x::AbstractVector{T}) where {T}
+function localmaxima1d(x::AbstractVector{T}) where {T<:Real}
     midpts = Vector{Int}(undef, 0)
     leftedges = Vector{Int}(undef, 0)
     rightedges = Vector{Int}(undef, 0)
@@ -50,7 +50,13 @@ Find all local maxima in a 1-D signal with specified `height`, `distance`, `prom
 - `relheight`: used for calculation of peak width
 ...
 """
-function findpeaks1d(x::AbstractVector{T}; height::Union{Nothing,T, NTuple{2,T}}=nothing, distance::Union{Nothing,Integer}=nothing, prominence::Union{Nothing,Float64,Tuple}=nothing, width::Union{Nothing,Float64,Tuple}=nothing, wlen::Union{Nothing,Int}=nothing, relheight::Float64=0.5) where {T}
+function findpeaks1d(x::AbstractVector{T}; 
+                     height::Union{Nothing,T, NTuple{2,T}}=nothing, 
+                     distance::Union{Nothing,I}=nothing, 
+                     prominence::Union{Nothing,PT,Tuple}=nothing, 
+                     width::Union{Nothing,PT,Tuple}=nothing, 
+                     wlen::Union{Nothing,I}=nothing, 
+                     relheight::PT=0.5) where {T<:Real,I<:Integer,PT<:AbstractFloat}
     pkindices, leftedges, rightedges = localmaxima1d(x)
     properties = Dict{String,Any}()
 
@@ -69,7 +75,7 @@ function findpeaks1d(x::AbstractVector{T}; height::Union{Nothing,T, NTuple{2,T}}
         properties = Dict{String, Any}(key => array[keep] for (key, array) in properties)
     end
 
-    if (prominence !== nothing) || (width != nothing)
+    if (prominence !== nothing) || (width !== nothing)
 #        wlen = argwlenasexpected(wlen)
         prominences, leftbases, rightbases = peakprominences1d(x, pkindices, wlen)
         properties["prominences"] = prominences
@@ -102,7 +108,9 @@ end
 """
 Calculate the prominence of each peak in a 1-D signal.
 """
-function peakprominences1d(x::AbstractVector{T}, pkindices::AbstractVector{I}, wlen=nothing) where {T,I<:Integer}
+function peakprominences1d(x::AbstractVector{T}, 
+                           pkindices::AbstractVector{I}, 
+                           wlen::Union{Nothing,I}=nothing) where {T<:Real,I<:Integer}
     wlen = argwlenasexpected(wlen)
 
     prominences = Vector{T}(undef, length(pkindices))
@@ -148,14 +156,23 @@ end
 """
 Calculate the width of each peak in a 1-D signal.
 """
-function peakwidths1d(x::AbstractVector{T}, pkindices::AbstractVector{I}, relheight::Float64=0.5, prominencedata::Union{Nothing,Tuple}=nothing, wlen=nothing) where {T,I<:Integer}
+function peakwidths1d(x::AbstractVector{T}, 
+                      pkindices::AbstractVector{I}, 
+                      relheight::PT=0.5, 
+                      prominencedata::Union{Nothing,Tuple}=nothing, 
+                      wlen::Union{Nothing,I}=nothing) where {T<:Real,I<:Integer,PT<:AbstractFloat}
     if prominencedata === nothing
         prominencedata = peakprominences1d(x, pkindices, wlen)
     end
     prominences, leftbases, rightbases = prominencedata
     peakwidths1d(x, pkindices, relheight, prominences, leftbases, rightbases)
 end
-function peakwidths1d(x::AbstractVector{T}, pkindices::AbstractVector{I}, relheight::Float64, prominences, leftbases, rightbases) where {T,I<:Integer}
+function peakwidths1d(x::AbstractVector{T}, 
+                      pkindices::AbstractVector{I}, 
+                      relheight::PT, 
+                      prominences, 
+                      leftbases, 
+                      rightbases) where {T<:Real,I<:Integer,PT<:AbstractFloat}
 
     npkindices = length(pkindices)
     (relheight < 0) && throw(ArgumentError("`relheight` must be greater pr equal to zero"))
