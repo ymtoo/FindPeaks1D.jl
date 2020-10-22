@@ -35,7 +35,7 @@ function localmaxima1d(x::AbstractVector{T}) where {T<:Real}
 end
 
 """
-    findpeaks(x, [, height, distance, prominence, width, wlen, relheight])
+    findpeaks1d(x, [, height, distance, prominence, width, wlen, relheight])
 
 Find all local maxima in a 1-D signal with specified `height`, `distance`, `prominence`, `width`.
 
