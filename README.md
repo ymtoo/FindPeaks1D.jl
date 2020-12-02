@@ -3,7 +3,12 @@
 [![codecov](https://codecov.io/gh/ymtoo/FindPeaks1D.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/ymtoo/FindPeaks1D.jl)
 
 
-Finding peaks in a 1-D signal in Julia. The implementation is based on `find_peaks` in `scipy`.
+Finding peaks in a 1-D signal in Julia. The implementation is based on [`find_peaks`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html) in `scipy`.
+
+## Installation
+```julia
+using Pkg; pkg"add https://github.com/ymtoo/FindPeaks1D.jl.git"
+```
 
 ## Usage
 ```julia
