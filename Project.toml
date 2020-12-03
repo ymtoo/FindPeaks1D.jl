@@ -6,6 +6,9 @@ version = "0.1.2"
 [deps]
 SortingLab = "562c1548-17b8-5b69-83cf-d8aebec229f5"
 
+[compat]
+julia = "1"
+
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
