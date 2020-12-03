@@ -17,7 +17,8 @@ using FindPeaks1D, ImageFiltering, Plots
 n = 48001
 s1 = ImageFiltering.Kernel.gaussian((1000,), (n,))
 s2 = ImageFiltering.Kernel.gaussian((500,), (n,))
-s = s1.parent/maximum(s1.parent) + 0.5 * circshift(s2.parent/maximum(s2.parent), (10000,))
+s = s1.parent/maximum(s1.parent) + 0.5 * circshift(
+    s2.parent/maximum(s2.parent), (10000,))
 ```
 ```julia
 pkindices, properties = findpeaks1d(s; 
