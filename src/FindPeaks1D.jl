@@ -37,13 +37,13 @@ function localmaxima1d(x::AbstractVector{T}) where {T<:Real}
 end
 
 """
-    findpeaks1d(x, [, height, distance, prominence, width, wlen, relheight])
+    findpeaks1d(x; height=nothing, distance=nothing, prominence=nothing, width=nothing, wlen=nothing, relheight=0.5)
 
 Find all local maxima in a 1-D signal with specified `height`, `distance`, `prominence`, `width`.
 
 # Arguments
-- `x`: 1-D signal with `T` element type
-- `height`: the first element is the minimal and the second , if supplied, is the maximal peak height
+- `x`: 1-D signal
+- `height`: the first element is the minimal and the second, if supplied, is the maximal peak height
 - `distance`: the minimal peak distance
 - `prominence`: the first element is the minimal and the second, if supplied, is the maximal peak prominence
 - `width`: the first element is the minimal and the second, if supplied, is the maximal peak width
@@ -108,7 +108,7 @@ function findpeaks1d(x::AbstractVector{T};
     end
 
     if width !== nothing
-        widths, widthheights, leftips, rightips = peakwidths1d(x, pkindices, relheight, properties["prominences"], properties["leftbases"], properties["rightbases"])
+        widths, widthheights, leftips, rightips = peakwidths1d(x, pkindices, relheight, prominences, leftbases, rightbases)
         properties["widths"] = widths
         properties["widthheights"] = widthheights
         properties["leftips"] = leftips
@@ -123,7 +123,18 @@ function findpeaks1d(x::AbstractVector{T};
 end
 
 """
+    peakprominences1(x, pkindices, wlen=nothing)
+
 Calculate the prominence of each peak in a 1-D signal.
+
+# Arguments
+- `x`: 1-D signal
+- `pkindices`: peak indices
+- `wlen`: a window length in samples to restrict peak finding to a window around the current peak
+
+# Returns
+- `prominences`: prominences for each peaks
+- `leftbases`, `rightbases`: indices of the left and right of each peak for peaks' bases
 """
 function peakprominences1d(x::AbstractVector{T}, 
                            pkindices::AbstractVector{I}, 
@@ -171,7 +182,21 @@ function peakprominences1d(x::AbstractVector{T},
 end
 
 """
+    peakwidths1d(x, pkindices, relheight=0.5, prominencedata=nothing, wlen=nothing)
+
 Calculate the width of each peak in a 1-D signal.
+
+# Arguments
+- `x`: 1-D signal
+- `pkindices`: peak indices
+- `relheight`: relative height with respect to the peak heights and prominences
+- `wlen`: a window length in samples to restrict peak finding to a window around the current peak
+
+# Returns
+- `widths`: width for each peak in samples
+- `widthheights`: height at which the `widths` are evaluated
+- `leftips`, `rightips`: interpolated left and right intersection points of a horizontal line at the 
+respective `widthheights`
 """
 function peakwidths1d(x::AbstractVector{T}, 
                       pkindices::AbstractVector{I}, 
@@ -184,6 +209,23 @@ function peakwidths1d(x::AbstractVector{T},
     prominences, leftbases, rightbases = prominencedata
     peakwidths1d(x, pkindices, relheight, prominences, leftbases, rightbases)
 end
+"""
+    peakwidths1d(x, pkindices, relheight, prominences, leftbases, rightbases)
+
+Calculate the width of each peak in a 1-D signal.
+
+# Arguments
+- `x`: 1-D signal
+- `pkindices`: peak indices
+- `relheight`: relative height with respect to the peak heights and prominences
+- `prominencedata`: output of `peakprominences1d`
+- `leftbases`, `rightbases`: indices of the left and right of each peak for peaks' bases
+
+# Returns
+- `widths`: width for each peak in samples
+- `widthheights`: height at which the `widths` are evaluated
+- `leftips`, `rightips`: interpolated left and right intersection points of a horizontal line at the respective `widthheights`
+"""
 function peakwidths1d(x::AbstractVector{T}, 
                       pkindices::AbstractVector{I}, 
                       relheight::PT, 
