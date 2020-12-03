@@ -66,28 +66,29 @@ julia> pkindices, pkproperties = findpeaks1d(x, height=11, distance=3)
 ```
 """
 function findpeaks1d(x::AbstractVector{T}; 
-                     height::Union{Nothing,T, NTuple{2,T}}=nothing, 
+                     height::Union{Nothing,T,NTuple{2,T}}=nothing, 
                      distance::Union{Nothing,I}=nothing, 
-                     prominence::Union{Nothing,PT,Tuple}=nothing, 
-                     width::Union{Nothing,PT,Tuple}=nothing, 
+                     prominence::Union{Nothing,PT,NTuple{2,PT}}=nothing, 
+                     width::Union{Nothing,PT,NTuple{2,PT}}=nothing, 
                      wlen::Union{Nothing,I}=nothing, 
                      relheight::PT=0.5) where {T<:Real,I<:Integer,PT<:AbstractFloat}
     pkindices, leftedges, rightedges = localmaxima1d(x)
     properties = Dict{String,Any}()
+    isempty(pkindices) && (return pkindices, properties)
 
     if height !== nothing
         pkheights = x[pkindices]
         hmin, hmax = height isa Number ? (height, nothing) : height
-        keep = selectbyproperty(pkheights, hmin, hmax)
-        pkindices = pkindices[keep]
+        keepheight = selectbyproperty(pkheights, hmin, hmax)
+        pkindices = pkindices[keepheight]
         properties["peak_heights"] = pkheights
-        properties = Dict{String, Any}(key => array[keep] for (key, array) in properties)
+        properties = Dict{String,Any}(key => array[keepheight] for (key, array) in properties)
     end
 
     if distance !== nothing
-        keep = selectbypeakdistance(pkindices, x[pkindices], distance)
-        pkindices = pkindices[keep]
-        properties = Dict{String, Any}(key => array[keep] for (key, array) in properties)
+        keepdist = selectbypeakdistance(pkindices, x[pkindices], distance)
+        pkindices = pkindices[keepdist]
+        properties = Dict{String,Any}(key => array[keepdist] for (key, array) in properties)
     end
 
     if (prominence !== nothing) || (width !== nothing)
@@ -99,9 +100,9 @@ function findpeaks1d(x::AbstractVector{T};
 
     if prominence !== nothing
         pmin, pmax = prominence isa Number ? (prominence, nothing) : prominence
-        keep = selectbyproperty(properties["prominences"], pmin, pmax)
-        pkindices = pkindices[keep]
-        properties = Dict{String, Any}(key => array[keep] for (key, array) in properties)
+        keepprom = selectbyproperty(prominences, pmin, pmax)
+        pkindices = pkindices[keepprom]
+        properties = Dict{String,Any}(key => array[keepprom] for (key, array) in properties)
     end
 
     if width !== nothing
@@ -111,9 +112,9 @@ function findpeaks1d(x::AbstractVector{T};
         properties["leftips"] = leftips
         properties["rightips"] = rightips
         wmin, wmax = width isa Number ? (width, nothing) : width
-        keep = selectbyproperty(properties["widths"], wmin, wmax)
-        pkindices = pkindices[keep]
-        properties = Dict{String, Any}(key => array[keep] for (key, array) in properties)
+        keepwidth = selectbyproperty(widths, wmin, wmax)
+        pkindices = pkindices[keepwidth]
+        properties = Dict{String,Any}(key => array[keepwidth] for (key, array) in properties)
     end
 
     pkindices, properties
