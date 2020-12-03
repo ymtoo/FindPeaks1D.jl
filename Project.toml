@@ -3,6 +3,9 @@ uuid = "d8961e24-b28b-4efb-8e50-1c680b9a7431"
 authors = ["ymtoo <ymtoo86@gmail.com>"]
 version = "0.1.1"
 
+[deps]
+SortingLab = "562c1548-17b8-5b69-83cf-d8aebec229f5"
+
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
