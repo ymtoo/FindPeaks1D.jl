@@ -1,5 +1,5 @@
 function selectbyproperty(pkproperties, pmin, pmax)
-    keep = BitVector(ones(length(pkproperties)))
+    keep = trues(length(pkproperties))
     if pmin !== nothing
         keep .&= (pmin .<= pkproperties)
     end
@@ -11,7 +11,7 @@ end
 
 function selectbypeakdistance(pkindices, priority, distance)
     npkindices = length(pkindices)
-    keep = BitVector(ones(npkindices))
+    keep = trues(npkindices)
 
     prioritytoposition = fsortperm(priority)
     for i in npkindices:-1:1
