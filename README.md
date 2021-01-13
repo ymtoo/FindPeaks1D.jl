@@ -1,5 +1,5 @@
 # FindPeaks1D
-[![Build Status](https://travis-ci.org/ymtoo/FindPeaks1D.jl.svg?branch=master)](https://travis-ci.org/ymtoo/FindPeaks1D.jl)
+![CI](https://github.com/ymtoo/FindPeaks1D.jl/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/ymtoo/FindPeaks1D.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/ymtoo/FindPeaks1D.jl)
 
 
