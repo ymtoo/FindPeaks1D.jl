@@ -1,7 +1,7 @@
 name = "FindPeaks1D"
 uuid = "d8961e24-b28b-4efb-8e50-1c680b9a7431"
 authors = ["ymtoo <ymtoo86@gmail.com>"]
-version = "0.1.4"
+version = "0.1.5"
 
 [deps]
 SortingLab = "562c1548-17b8-5b69-83cf-d8aebec229f5"
