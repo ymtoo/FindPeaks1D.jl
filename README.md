@@ -1,7 +1,8 @@
 # FindPeaks1D
 ![CI](https://github.com/ymtoo/FindPeaks1D.jl/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/ymtoo/FindPeaks1D.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/ymtoo/FindPeaks1D.jl)
-
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ymtoo.github.io/FindPeaks1D.jl/stable)
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://ymtoo.github.io/FindPeaks1D.jl/dev)
 
 Finding peaks in a 1-D signal in Julia. The implementation is based on [`find_peaks`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html) in `SciPy`.
 
