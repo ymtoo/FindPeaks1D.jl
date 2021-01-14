@@ -7,6 +7,8 @@ export findpeaks1d, peakprominences1d, peakwidths1d
 include("utils.jl")
 
 """
+    localmaxima1d(x)
+
 Finds all local maxima in a 1-D signal. The first and the last sample can't be maxima.
 """
 function localmaxima1d(x::AbstractVector{T}) where {T<:Real}
@@ -37,7 +39,13 @@ function localmaxima1d(x::AbstractVector{T}) where {T<:Real}
 end
 
 """
-    findpeaks1d(x; height=nothing, distance=nothing, prominence=nothing, width=nothing, wlen=nothing, relheight=0.5)
+    findpeaks1d(x; 
+                height=nothing, 
+                distance=nothing, 
+                prominence=nothing, 
+                width=nothing, 
+                wlen=nothing, 
+                relheight=0.5)
 
 Find all local maxima in a 1-D signal with specified `height`, `distance`, `prominence`, `width`.
 
