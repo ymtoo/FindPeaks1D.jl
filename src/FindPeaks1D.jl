@@ -76,12 +76,12 @@ julia> pkindices, pkproperties = findpeaks1d(x, height=11, distance=3)
 ```
 """
 function findpeaks1d(x::AbstractVector{T}; 
-                     height::Union{Nothing,T,NTuple{2,T}}=nothing, 
+                     height::Union{Nothing,<:Real,NTuple{2,<:Real}}=nothing, 
                      distance::Union{Nothing,I}=nothing, 
-                     prominence::Union{Nothing,PT,NTuple{2,PT}}=nothing, 
-                     width::Union{Nothing,PT,NTuple{2,PT}}=nothing, 
+                     prominence::Union{Nothing,Real,NTuple{2,Real}}=nothing, 
+                     width::Union{Nothing,Real,NTuple{2,Real}}=nothing, 
                      wlen::Union{Nothing,I}=nothing, 
-                     relheight::PT=0.5) where {T<:Real,I<:Integer,PT<:AbstractFloat}
+                     relheight::Real=0.5) where {T<:Real,I<:Integer}
     pkindices, leftedges, rightedges = localmaxima1d(x)
     properties = Dict{String,Any}()
     isempty(pkindices) && (return pkindices, properties)
