@@ -208,9 +208,9 @@ respective `widthheights`
 """
 function peakwidths1d(x::AbstractVector{T}, 
                       pkindices::AbstractVector{I}, 
-                      relheight::PT=0.5, 
+                      relheight::Real=0.5, 
                       prominencedata::Union{Nothing,Tuple}=nothing, 
-                      wlen::Union{Nothing,I}=nothing) where {T<:Real,I<:Integer,PT<:AbstractFloat}
+                      wlen::Union{Nothing,I}=nothing) where {T<:Real,I<:Integer}
     if prominencedata === nothing
         prominencedata = peakprominences1d(x, pkindices, wlen)
     end
@@ -236,10 +236,10 @@ Calculate the width of each peak in a 1-D signal.
 """
 function peakwidths1d(x::AbstractVector{T}, 
                       pkindices::AbstractVector{I}, 
-                      relheight::PT, 
+                      relheight::Real, 
                       prominences, 
                       leftbases, 
-                      rightbases) where {T<:Real,I<:Integer,PT<:AbstractFloat}
+                      rightbases) where {T<:Real,I<:Integer}
 
     npkindices = length(pkindices)
     (relheight < 0) && throw(ArgumentError("`relheight` must be greater pr equal to zero"))
