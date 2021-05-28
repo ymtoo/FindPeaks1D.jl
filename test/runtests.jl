@@ -34,7 +34,13 @@ using Test
     @test all(isapprox.(rightips1 ,[8.75, 13.0, 16.875, 16.375, 20.0], atol=0.001))
 
     pkindices1, _ = findpeaks1d(x, prominence=0.1, width=3.0, relheight=1.0)
+    @test pkindices1 == [6,14]
     pkindices2, _ = findpeaks1d(x, prominence=0.3, width=2.0, relheight=0.5)
+    @test pkindices2 == [6]
+    # test for less strict type signature
+    pkindices1, _ = findpeaks1d(x, prominence=1//10, width=3, relheight=1.0)
+    @test pkindices1 == [6,14]
+    pkindices2, _ = findpeaks1d(x, prominence=0.3, width=2, relheight=1//2)
     @test pkindices2 == [6]
 
     @test_throws ArgumentError pkindiceswlenerror, _ = findpeaks1d(x, prominence=0.3, wlen=0)
