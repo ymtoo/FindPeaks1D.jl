@@ -59,7 +59,7 @@ Find all local maxima in a 1-D signal with specified `height`, `distance`, `prom
 - `relheight`: used for calculation of peak width
 
 # Returns
-Peak indices amd properties
+Peak indices and properties
 
 # Examples
 ```julia-repl
