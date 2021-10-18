@@ -63,13 +63,13 @@ Peak indices and properties
 
 # Examples
 ```julia-repl
-julia> x = [13, 12, 14, 18, 19, 19, 19, 15, 11, 6, 4, 10, 8, 13, 8, 11, 3, 18, 7, 4];
+julia> x = [13, 12, 14, 18, 19, 19, 19, 15, 11, 6, 4, 10, 8, 13, 8, 13, 3, 18, 7, 4];
 
 julia> pkindices, pkproperties = findpeaks1d(x)
 ([6, 12, 14, 16, 18], Dict{String,Any}())
 
 julia> pkindices, pkproperties = findpeaks1d(x, height=11)
-([6, 14, 16, 18], Dict{String,Any}("peak_heights" => [19, 13, 11, 18]))
+([6, 14, 16, 18], Dict{String,Any}("peak_heights" => [19, 13, 13, 18]))
 
 julia> pkindices, pkproperties = findpeaks1d(x, height=11, distance=3)
 ([6, 14, 18], Dict{String,Any}("peak_heights" => [19, 13, 18]))
