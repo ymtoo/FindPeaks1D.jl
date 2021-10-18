@@ -116,7 +116,12 @@ function findpeaks1d(x::AbstractVector{T};
     end
 
     if width !== nothing
-        widths, widthheights, leftips, rightips = peakwidths1d(x, pkindices, relheight, prominences, leftbases, rightbases)
+        widths, widthheights, leftips, rightips = peakwidths1d(x, 
+                                                               pkindices, 
+                                                               relheight, 
+                                                               properties["prominences"], 
+                                                               properties["leftbases"], 
+                                                               properties["rightbases"])
         properties["widths"] = widths
         properties["widthheights"] = widthheights
         properties["leftips"] = leftips
