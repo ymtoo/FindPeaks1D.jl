@@ -86,7 +86,7 @@ function findpeaks1d(x::AbstractVector{T};
     properties = Dict{String,Any}()
     isempty(pkindices) && (return pkindices, properties)
 
-    if height !== nothing
+    if !isnothing(height)
         pkheights = x[pkindices]
         hmin, hmax = height isa Number ? (height, nothing) : height
         keepheight = selectbyproperty(pkheights, hmin, hmax)
@@ -95,27 +95,27 @@ function findpeaks1d(x::AbstractVector{T};
         properties = Dict{String,Any}(key => array[keepheight] for (key, array) in properties)
     end
 
-    if distance !== nothing
+    if !isnothing(distance)
         keepdist = selectbypeakdistance(pkindices, x[pkindices], distance)
         pkindices = pkindices[keepdist]
         properties = Dict{String,Any}(key => array[keepdist] for (key, array) in properties)
     end
 
-    if (prominence !== nothing) || (width !== nothing)
+    if !isnothing(prominence) || !isnothing(width)
         prominences, leftbases, rightbases = peakprominences1d(x, pkindices, wlen)
         properties["prominences"] = prominences
         properties["leftbases"] = leftbases
         properties["rightbases"] = rightbases
     end
 
-    if prominence !== nothing
+    if !isnothing(prominence)
         pmin, pmax = prominence isa Number ? (prominence, nothing) : prominence
         keepprom = selectbyproperty(prominences, pmin, pmax)
         pkindices = pkindices[keepprom]
         properties = Dict{String,Any}(key => array[keepprom] for (key, array) in properties)
     end
 
-    if width !== nothing
+    if !isnothing(width)
         widths, widthheights, leftips, rightips = peakwidths1d(x, 
                                                                pkindices, 
                                                                relheight, 
@@ -158,7 +158,7 @@ function peakprominences1d(x::AbstractVector{T},
     leftbases = Vector{Int}(undef, length(pkindices))
     rightbases = Vector{Int}(undef, length(pkindices))
 
-    for pknr = 1:length(pkindices)
+    for pknr ∈ eachindex(pkindices)
         pkindex = pkindices[pknr]
         imin = 1
         imax = length(x)
@@ -216,7 +216,7 @@ function peakwidths1d(x::AbstractVector{T},
                       relheight::Real=0.5, 
                       prominencedata::Union{Nothing,Tuple}=nothing, 
                       wlen::Union{Nothing,I}=nothing) where {T<:Real,I<:Integer}
-    if prominencedata === nothing
+    if isnothing(prominencedata)
         prominencedata = peakprominences1d(x, pkindices, wlen)
     end
     prominences, leftbases, rightbases = prominencedata
@@ -245,9 +245,8 @@ function peakwidths1d(x::AbstractVector{T},
                       prominences, 
                       leftbases, 
                       rightbases) where {T<:Real,I<:Integer}
-
     npkindices = length(pkindices)
-    (relheight < 0) && throw(ArgumentError("`relheight` must be greater pr equal to zero"))
+    (relheight < 0) && throw(ArgumentError("`relheight` must be greater or equal to zero"))
     !(npkindices == length(prominences) == length(leftbases) == length(rightbases)) && throw(ArgumentError("arrays in `prominencedata` must have the same length as `pkindices`"))
 
     widths = Vector{Float64}(undef, npkindices)
@@ -255,7 +254,7 @@ function peakwidths1d(x::AbstractVector{T},
     leftips = Vector{Float64}(undef, npkindices)
     rightips = Vector{Float64}(undef, npkindices)
 
-    for p in 1:npkindices
+    for p ∈ 1:npkindices
         imin = leftbases[p]
         imax = rightbases[p]
         pkindex = pkindices[p]

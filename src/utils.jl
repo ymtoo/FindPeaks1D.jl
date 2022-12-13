@@ -1,9 +1,9 @@
 function selectbyproperty(pkproperties, pmin, pmax)
     keep = trues(length(pkproperties))
-    if pmin !== nothing
+    if !isnothing(pmin)
         keep .&= (pmin .<= pkproperties)
     end
-    if pmax !== nothing
+    if !isnothing(pmax)
         keep .&= (pkproperties .<= pmax)
     end
     keep
@@ -34,7 +34,7 @@ function selectbypeakdistance(pkindices, priority, distance)
 end
 
 function argwlenasexpected(value)
-    if value === nothing
+    if isnothing(value)
         value = -1
     elseif 1 < value
         value = ceil(Int, value)
