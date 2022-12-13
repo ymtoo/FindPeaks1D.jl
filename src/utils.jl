@@ -14,9 +14,9 @@ function selectbypeakdistance(pkindices, priority, distance)
     keep = trues(npkindices)
 
     prioritytoposition = fsortperm(priority)
-    for i in npkindices:-1:1
+    for i ∈ npkindices:-1:1
         j = prioritytoposition[i]
-        (keep[j] == 0) && continue
+        iszero(keep[j]) && continue
 
         k = j-1
         while (1 <= k) && ((pkindices[j]-pkindices[k]) < distance)
