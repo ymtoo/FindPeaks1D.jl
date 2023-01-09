@@ -1,7 +1,5 @@
 module FindPeaks1D
 
-using SortingLab
-
 export findpeaks1d, peakprominences1d, peakwidths1d
 
 include("utils.jl")
