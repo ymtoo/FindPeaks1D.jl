@@ -13,7 +13,7 @@ function selectbypeakdistance(pkindices, priority, distance)
     npkindices = length(pkindices)
     keep = trues(npkindices)
 
-    prioritytoposition = fsortperm(priority)
+    prioritytoposition = sortperm(priority)
     for i ∈ npkindices:-1:1
         j = prioritytoposition[i]
         iszero(keep[j]) && continue
